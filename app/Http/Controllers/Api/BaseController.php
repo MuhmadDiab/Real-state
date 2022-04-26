@@ -12,7 +12,22 @@ class BaseController extends Controller
           'success'=>true,
           'data'=>$result,
           'massage'=>$message
-
+        ];
+        return response()->json($response,200);
+    }
+    public function loginAndRegisterResponse($result,$message,$token){
+        $response=[
+          'success'=>true,
+          'data'=>$result,
+          'token'=>$token,
+          'massage'=>$message
+        ];
+        return response()->json($response,200);
+    }
+    public function sendResponseWithJustMessage($message){
+        $response=[
+          'success'=>true,
+          'massage'=>$message
         ];
         return response()->json($response,200);
     }
@@ -20,8 +35,6 @@ class BaseController extends Controller
         $response=[
           'success'=>false,
           'data'=>$error,
-
-
         ];
         if(!empty($errormessage)){
             $request['data']=$errormessage;

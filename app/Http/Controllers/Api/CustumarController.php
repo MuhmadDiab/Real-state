@@ -18,29 +18,38 @@ class CustumarController extends BaseController
             'name'=>'required',
             'email'=>'required|email',
             'password'=>'required',
-            'photo'=>'required|image',
+            'photo'=>'image',
           ]);
           if($validator->fails()){
-            return $this->sendError('Please validate error',$validator->errors);
+            return $this->sendError('Please validate error',$validator->errors()->toArray());
+        }
+        $user_check = User::where("email", "=", $request->email)->first();
+        if(isset($user_check->id))
+        {
+            return $this->sendError('this email is already in use');
         }
         $photo=$request->photo;
-      $newphoto=time().$photo->getClientOriginalName();
-      $photo->move(public_path('upload'),$newphoto);
-      $path = "public/upload/$newphoto";
+        $path = '' ;
+        if($photo != null)
+        {
+            $newphoto=time().$photo->getClientOriginalName();
+            $photo->move(public_path('upload'),$newphoto);
+            $path = "public/upload/$newphoto";
+        }
 
         // create data
-        $costumar = new User();
+        $user = new User();
 
-        $costumar->name = $request->name;
-        $costumar->email = $request->email;
-        $costumar->password = Hash::make($request->password);
-        $costumar->phone_no = isset($request->phone_no) ? $request->phone_no : "";
-        $costumar->photo=$path;
-        $costumar->save();
-
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->phone_no = isset($request->phone_no) ? $request->phone_no : "";
+        $user->user_role = 2 ;
+        $user->photo=$path;
+        $user->save();
+        $token = $user->createToken("auth_token")->plainTextToken;
         // send response
-        return $this->sendResponse($costumar,'User registered successfully');
-
+        return $this->loginAndRegisterResponse($user,'User registered successfully',$token);
     }
 
     // LOGIN API
@@ -53,17 +62,14 @@ class CustumarController extends BaseController
         ]);
 
         // check student
-        $costumar = User::where("email", "=", $request->email)->first();
+        $user = User::where("email", "=", $request->email)->first();
 
-        if(isset($costumar->id)){
-
-            if(Hash::check($request->password, $costumar->password)){
-
+        if(isset($user->id)){
+            if(Hash::check($request->password, $user->password)){
                 // create a token
-                $token = $costumar->createToken("auth_token")->plainTextToken;
-
+                $token = $user->createToken("auth_token")->plainTextToken;
                 /// send a response
-                return $this->sendResponse($token,'User login successfully ');
+                return $this->loginAndRegisterResponse($user,'User login successfully',$token);
             }
         }else{
             return $this->sendError('please  check your Auth',['error'=>'Unauthorised']);
@@ -79,6 +85,6 @@ class CustumarController extends BaseController
     public function logout()
  {
     auth()->user()->tokens()->delete();
-    return $this->sendError('the user logged out');
+    return $this->sendResponseWithJustMessage('the user logged out');
  }
 }
