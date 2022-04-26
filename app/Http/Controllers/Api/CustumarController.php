@@ -18,12 +18,15 @@ class CustumarController extends BaseController
             'name'=>'required',
             'email'=>'required|email',
             'password'=>'required',
-           // 'c_password'=>'required|same:password',
-
+            'photo'=>'required|image',
           ]);
           if($validator->fails()){
             return $this->sendError('Please validate error',$validator->errors);
         }
+        $photo=$request->photo;
+      $newphoto=time().$photo->getClientOriginalName();
+      $photo->move(public_path('upload'),$newphoto);
+      $path = "public/upload/$newphoto";
 
         // create data
         $costumar = new User();
@@ -32,7 +35,7 @@ class CustumarController extends BaseController
         $costumar->email = $request->email;
         $costumar->password = Hash::make($request->password);
         $costumar->phone_no = isset($request->phone_no) ? $request->phone_no : "";
-
+        $costumar->photo=$path;
         $costumar->save();
 
         // send response
@@ -71,11 +74,11 @@ class CustumarController extends BaseController
     {
         return $this->sendResponse(auth()->user(),'this is user profile');
     }
-///////////////auth()->user()
+  ///////////////auth()->user()
     // LOGOUT API
     public function logout()
  {
-            auth()->user()->tokens()->delete();
-        return $this->sendError('the user logged out');
+    auth()->user()->tokens()->delete();
+    return $this->sendError('the user logged out');
  }
 }
