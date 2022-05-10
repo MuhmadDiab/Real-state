@@ -18,7 +18,7 @@ class CustumarController extends BaseController
             'name'=>'required',
             'email'=>'required|email',
             'password'=>'required',
-            'photo'=>'required|image',
+          //  'photo'=>'required|image',
           ]);
           if($validator->fails()){
             return $this->sendError('Please validate error',$validator->errors);
@@ -35,11 +35,14 @@ class CustumarController extends BaseController
         $costumar->email = $request->email;
         $costumar->password = Hash::make($request->password);
         $costumar->phone_no = isset($request->phone_no) ? $request->phone_no : "";
-        $costumar->photo=$path;
+        $costumar->photo= isset($path) ? $path: " ";
         $costumar->save();
+          // create a token
+        $token = $costumar->createToken("auth_token")->plainTextToken;
 
-        // send response
-        return $this->sendResponse($costumar,'User registered successfully');
+                        /// send a response
+                    //    return $this->sendResponse($token,'User login successfully ');
+        return $this->sendResponse($costumar,$token,'User registered successfully');
 
     }
 
@@ -58,12 +61,8 @@ class CustumarController extends BaseController
         if(isset($costumar->id)){
 
             if(Hash::check($request->password, $costumar->password)){
-
-                // create a token
                 $token = $costumar->createToken("auth_token")->plainTextToken;
-
-                /// send a response
-                return $this->sendResponse($token,'User login successfully ');
+                return $this->sendResponse($token,$costumar,'User login successfully ');
             }
         }else{
             return $this->sendError('please  check your Auth',['error'=>'Unauthorised']);
@@ -72,7 +71,7 @@ class CustumarController extends BaseController
     // PROFILE API
     public function profile()
     {
-        return $this->sendResponse(auth()->user(),'this is user profile');
+        return $this->sendResponse2(auth()->user(),'this is user profile');
     }
   ///////////////auth()->user()
     // LOGOUT API

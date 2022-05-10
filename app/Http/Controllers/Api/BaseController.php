@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class BaseController extends Controller
 {
-    public function sendResponse($result,$message){
+    public function sendResponse($result,$result2,$message){
         $response=[
           'success'=>true,
-          'data'=>$result,
+          'data'=>$result,$result2,
           'massage'=>$message
 
         ];
@@ -36,5 +36,14 @@ class BaseController extends Controller
             'massege'=>$massege
         ];
         return response()->json($massege);
+    }
+    public function sendResponse2($result,$message){
+        $response=[
+          'success'=>true,
+          'data'=>$result,
+          'massage'=>$message
+
+        ];
+        return response()->json($response,200);
     }
 }
