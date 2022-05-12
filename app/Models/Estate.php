@@ -23,10 +23,12 @@ class Estate extends Model
         'state',
         'price',
         'local',
+        'lan',
+        'lat',
         'photo',
         'bathroomnumber',
         'bedroomnumber',
-         'propartytype',
+       'propartytype',
 
     ];
     protected $hidden = [

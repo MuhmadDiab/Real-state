@@ -1,20 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Models\Estate;
 use Illuminate\Http\Request;
-use App\Models\View;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Costumar;
-use App\Models\Like;
 
-use App\Models\Category;
-use Carbon\Carbon;
-use date;
-use Illuminate\Auth\Events\Validated;
-use PhpParser\Node\Stmt\Catch_;
 
 class EstateController extends BaseController
 {
@@ -29,10 +21,12 @@ class EstateController extends BaseController
         'state'=>'required',
         'price'=>'required',
         'local'=>'required',
+        'lan'=>'required',
+        'lat'=>'required',
         'photo'=>'required|image',
         'bathroomnumber'=>'required',
         'bedroomnumber'=>'required',
-        'propertytype'=>'required',
+       'propartytype'=>'required',
       ]);
         if($validator->fails()){
         return $this->sendError('Please validate error',$validator->errors);
@@ -42,24 +36,23 @@ class EstateController extends BaseController
       $newphoto=time().$photo->getClientOriginalName();
       $photo->move(public_path('upload'),$newphoto);
       $path = "public/upload/$newphoto";
-      //$costumar_id = auth()->user()->id;
 
-      $Product = new Estate();
-      //$Product->costumar_id = $costumar_id;
-      $Product->name = $request->name;
-      $Product->description = $request->description;
-      $Product->roomnumber = $request->roomnumber;
-      $Product->state = $request->state;
-      $Product->price = $request->price;
-      $Product->local = $request->local;
-      $Product->photo=$path;
-      $Product->bathroomnumber = $request->bathroomnumber;
-      $Product->bedroomnumber = $request->bedroomnumber;
-      $Product->propertytype = $request->propertytype;
-      //$Product->category_id = $category_id;
-      $Product->save();
+      $Estate = new Estate();
+      $Estate->name = $request->name;
+      $Estate->description = $request->description;
+      $Estate->roomnumber = $request->roomnumber;
+      $Estate->state = $request->state;
+      $Estate->price = $request->price;
+      $Estate->local = $request->local;
+      $Estate->lan = $request->lan;
+      $Estate->lat = $request->lat;
+      $Estate->photo=$path;
+      $Estate->bathroomnumber = $request->bathroomnumber;
+      $Estate->bedroomnumber = $request->bedroomnumber;
+      $Estate->propartytype = $request->propartytype;
+      $Estate->save();
 
       // send response
-      return $this->sendResponse2($Product,'the product created succeflly');
+      return $this->sendResponse2($Estate,'the Estate created succeflly');
     }
 }

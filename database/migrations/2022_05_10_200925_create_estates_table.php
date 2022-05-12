@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('state');
             $table->integer('price');
             $table->text('local');
+            $table->double('lan');
+            $table->double('lat');
             $table->string('photo');
             $table->integer('bathroomnumber');
             $table->integer('bedroomnumber');
