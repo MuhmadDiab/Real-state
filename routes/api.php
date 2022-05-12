@@ -10,7 +10,7 @@ Route::post("login", [CustumarController::class, "login"]);
 
 Route::group(["middleware" => ["auth:sanctum"]], function(){
 Route::get("profile", [CustumarController::class, "profile"]);
-Route::get("creatEstate", [EstateController::class, "createEstate"]);
+Route::post("creatEstate", [EstateController::class, "createEstate"]);
 Route::get("logout", [CustumarController::class, "logout"]);
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
