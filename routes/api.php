@@ -20,6 +20,8 @@ Route::post("/likeEstates/{id}",[Operationusercontroller::class,"like"]);
 Route::post("/createcomment/{id}",[Commentcontroller::class,"createcomment"]);
 Route::get("/getcomment/{id}",[Commentcontroller::class,"getcomments"]);
 Route::get("/viewestate/{id}",[Commentcontroller::class,"view"]);
+Route::get("searchestatename/{name}", [Commentcontroller::class, "searchname"]);
+
 
 Route::get("/logout", [CustumarController::class, "logout"]);
 });

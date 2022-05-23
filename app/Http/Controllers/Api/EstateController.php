@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Middleware\CheckRole;
-use App\Http\Requests\EstateRequest;
+//use App\Http\Requests\EstateRequest;
 use App\Models\Estate;
 use App\Models\User;
 use GuzzleHttp\Middleware;
@@ -27,7 +27,6 @@ class EstateController extends BaseController
      {
          $this->middleware(['auth','checkRole']);
      }
-
 
 
 

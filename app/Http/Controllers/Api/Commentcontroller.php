@@ -74,4 +74,18 @@ class Commentcontroller extends BaseController
 
       return $this->sendResponse2($estate,'successfully');
     }
+    public function searchname(Request $request , $name )
+    {
+      $Estate =Estate::where('name' ,'like','%'.$name.'%')->first();
+      if(!$Estate)
+      {
+        return $this->sendError('Estate not found');
+      }
+      else{
+      $Estate1 =Estate::where('name' ,'like','%'.$name.'%')->withCount('comment','view','like')->get();
+
+      return $this->sendResponse2($Estate1,'successfully');
+      }
+    }
+
 }
