@@ -21,7 +21,6 @@ class EstateController extends BaseController
      *
      * @return void
      */
-<<<<<<< HEAD
 
 
     public function __construct()
@@ -29,20 +28,13 @@ class EstateController extends BaseController
          $this->middleware(['auth','checkRole']);
      }
 
-=======
-    public function __construct()
-    {
-        $this->middleware(['auth','checkRole']);
-    }
->>>>>>> ed4c7ed0978d610a21786d267a6b0f6002af8122
 
 
 
-    public function createEstate(EstateRequest $request)
+    public function createEstate(Request $request)
     {
 
 
-<<<<<<< HEAD
       //validation
       $validator = Validator::make($request->all(),[
         'name'=>'required',
@@ -62,27 +54,6 @@ class EstateController extends BaseController
         return $this->sendError('Please validate error',$validator->errors);
        }
         $user_id= $request->user()->id;
-=======
-      // validation
-    //   $validator = Validator::make($request->all(),[
-    //     'name'=>'required',
-    //     'description'=>'required',
-    //     'roomnumber'=>'required',
-    //     'state'=>'required',
-    //     'price'=>'required',
-    //     'local'=>'required',
-    //     'lan'=>'required',
-    //     'lat'=>'required',
-    //     'photo'=>'required|image',
-    //     'bathroomnumber'=>'required',
-    //     'bedroomnumber'=>'required',
-    //    'propartytype'=>'required',
-    //   ]);
-    //     if($validator->fails()){
-    //     return $this->sendError('Please validate error',$validator->errors);
-    //    }
-
->>>>>>> ed4c7ed0978d610a21786d267a6b0f6002af8122
       $photo=$request->photo;
       $newphoto=time().$photo->getClientOriginalName();
       $photo->move(public_path('upload'),$newphoto);
@@ -107,43 +78,6 @@ class EstateController extends BaseController
       // send response
       return $this->sendResponse2($Estate,'the Estate created succeflly');
 
-<<<<<<< HEAD
-=======
-    }
-    public function updateEstate(Request $request ,$id){
-        $validator = Validator::make($request->all(),[
-            'name'=>'required',
-            'description'=>'required',
-            'state'=>'required',
-            'price'=>'required',
-          ]);
-       if($validator->fails())
-        {
-            return $this->sendError('Please validate error',$validator->errors);
-        }
-        $estate =Estate::where('id',$id)->first();
-
-         $estate->update([
-          'name'=>$request->name,
-          'description'=>$request->description,
-          'state'=>$request->state,
-          'price'=>$request->price,
-           ]);
-
-
-           return $this->sendResponse2($estate,'the Estate created succeflly');
-
-      }
-      public function deleteEstate($id)
-    {
-        $estate= Estate::find($id);
-        if(!$estate)
-        {
-            return $this->senderrors('the Estate not found');
-        }
-        $estate->delete();
-        return $this->sendResponse2($estate , 'the Estate deleted succeflly');
->>>>>>> ed4c7ed0978d610a21786d267a6b0f6002af8122
     }
 
     public function updateEstate(Request $request ,$id){
