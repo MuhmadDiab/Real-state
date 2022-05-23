@@ -59,4 +59,12 @@ class BaseController extends Controller
         ];
         return response()->json($response,200);
     }
+    Public function sendResponse3($message){
+        $response=[
+            'success'=>true,
+            'message'=>$message,
+             'code'=>200,
+        ];
+        return response()->json($response);
+    }
 }

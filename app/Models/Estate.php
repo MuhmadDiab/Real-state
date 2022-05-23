@@ -31,6 +31,27 @@ class Estate extends Model
        'propartytype',
 
     ];
+    public function user()
+    {
+      return $this->belongsTo(User::class);
+
+    }
+    public function comment()
+    {
+      return $this->hasMany(Comment::class);
+    }
+    public function view()
+    {
+      return $this->hasMany(View::class);
+    }
+
+    public function like()
+    {
+
+      return $this->hasMany(Like::class);
+
+    }
+    //
     protected $hidden = [
         'updated_at',
         'created_at'
