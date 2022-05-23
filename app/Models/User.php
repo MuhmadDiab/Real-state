@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Estate;
+use App\Models\Comment;
+use App\Models\Like;
 
 class User extends Authenticatable
 {
@@ -17,11 +20,25 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public function comment()
+    {
+      return $this->hasMany(Comment::class);
+
+    }
+
+    public function estate()
+    {
+      return $this->hasMany(Estate::class);
+
+    }
+    public function like()
+    {
+        return $this->hasOne(Like::class);
+    }
     protected $fillable = [
         'name',
         'email',
         'password',
-        'userRole',
         'phone_no',
         'photo',
 

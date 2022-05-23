@@ -27,6 +27,8 @@ return new class extends Migration
             $table->integer('bathroomnumber');
             $table->integer('bedroomnumber');
             $table->string('propartytype');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->softDeletes();
             $table->timestamps();
