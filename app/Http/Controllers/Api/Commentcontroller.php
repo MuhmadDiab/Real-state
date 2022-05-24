@@ -88,4 +88,34 @@ class Commentcontroller extends BaseController
       }
     }
 
+    public function searchtype(Request $request , $type )
+    {
+      $Estate =Estate::where('type' ,'like','%'.$type.'%')->first();
+      if(!$Estate)
+      {
+        return $this->sendError('Estate not found');
+      }
+      else{
+      $Estate1 =Estate::where('type' ,'like','%'.$type.'%')->withCount('comment','view','like')->get();
+
+      return $this->sendResponse2($Estate1,'successfully');
+      }
+    }
+
+    public function searchstate(Request $request , $state )
+    {
+      $Estate =Estate::where('state' ,'like','%'.$state.'%')->first();
+      if(!$Estate)
+      {
+        return $this->sendError('Estate not found');
+      }
+      else{
+      $Estate1 =Estate::where('state' ,'like','%'.$state.'%')->withCount('comment','view','like')->get();
+
+      return $this->sendResponse2($Estate1,'successfully');
+      }
+    }
+
+
+
 }
