@@ -23,7 +23,9 @@ Route::get("/viewestate/{id}",[Commentcontroller::class,"view"]);
 Route::get("searchestatename/{name}", [Commentcontroller::class, "searchname"]);
 Route::get("searchestatetype/{type}", [Commentcontroller::class, "searchtype"]);
 Route::get("searchestatestate/{state}", [Commentcontroller::class, "searchstate"]);
-
+Route::get("/searchestatebyprice/{min}/{max}",[Commentcontroller::class, "foundEstatebyprice"]);
+Route::get("/searchestateonmap/{lan1}/{lat1}/{lan2}/{lat2}/{lan3}/{lat3}/{lan4}/{lat4}",
+[Commentcontroller::class, "foundEstateonmap"]);
 Route::get("/logout", [CustumarController::class, "logout"]);
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
