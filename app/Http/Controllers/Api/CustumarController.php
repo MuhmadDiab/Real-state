@@ -42,6 +42,7 @@ class CustumarController extends BaseController
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->role = "user";
         $user->phone_no = isset($request->phone_no) ? $request->phone_no : "";
         $user->photo=$path;
         $user->save();
