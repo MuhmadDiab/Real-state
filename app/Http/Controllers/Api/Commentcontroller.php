@@ -56,42 +56,42 @@ public function getcomments(Request $request,$estate_id)
 }
 
 public function view(Request $request,$estate_id)
+  {
+
+    $estate =Estate::find($estate_id);
+
+    if(!$estate)
     {
-
-      $estate =Estate::find($estate_id);
-
-      if(!$estate)
-      {
         return $this->senderrors('the estate is not found');
-      }
-    $view=View::where('estate_id',$estate_id)->where('user_id',$request->user()->id)->first();
-    if(!$view)
+    }
+   $view=View::where('estate_id',$estate_id)->where('user_id',$request->user()->id)->first();
+   if(!$view)
     {
       View::create([
         'estate_id'=>$estate_id,
         'user_id'=>$request->user()->id
       ]);
     }
-    $estate =Estate::where('id',$estate_id)->withCount('comment','view','like')->with('comment')->first();
+   $estate =Estate::where('id',$estate_id)->withCount('comment','view','like')->with('comment')->first();
 
-      return $this->sendResponse2($estate,'successfully');
-    }
+    return $this->sendResponse2($estate,'successfully');
+  }
 
 
 
-    public function searchname(Request $request , $name )
+  public function searchname(Request $request , $name )
     {
-      $Estate =Estate::where('name' ,'like','%'.$name.'%')->first();
-      if(!$Estate)
-      {
-        return $this->sendError('Estate not found');
-      }
-      else{
-      $Estate1 =Estate::where('name' ,'like','%'.$name.'%')->withCount('comment','view','like')->get();
-
-      return $this->sendResponse2($Estate1,'successfully');
-      }
+    $Estate =Estate::where('name' ,'like','%'.$name.'%')->first();
+    if(!$Estate)
+    {
+      return $this->sendError('Estate not found');
     }
+    else
+    {
+     $Estate1 =Estate::where('name' ,'like','%'.$name.'%')->withCount('comment','view','like')->get();
+     return $this->sendResponse2($Estate1,'successfully');
+    }
+   }
 
 
 
@@ -107,9 +107,9 @@ public function view(Request $request,$estate_id)
       $Estate1 =Estate::where('type' ,'like','%'.$type.'%')->withCount('comment','view','like')->get();
 
       return $this->sendResponse2($Estate1,'successfully');
-      }
+     }
     }
-      public function searchstate( $state )
+    public function searchstate( $state )
     {
       $Estate =Estate::where('state' ,'like','%'.$state.'%')->first();
       if(!$Estate)

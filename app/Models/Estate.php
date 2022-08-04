@@ -25,7 +25,6 @@ class Estate extends Model
         'local',
         'lan',
         'lat',
-        'photo',
         'bathroomnumber',
         'bedroomnumber',
        'propartytype',
@@ -39,6 +38,10 @@ class Estate extends Model
     public function comment()
     {
       return $this->hasMany(Comment::class);
+    }
+    public function photo()
+    {
+      return $this->hasMany(Photo::class);
     }
     public function view()
     {

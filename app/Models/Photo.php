@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Estate;
-class Like extends Model
+class Photo extends Model
 {
     use HasFactory;
     protected $fillable = ['estate_id', 'photo'];

@@ -7,6 +7,7 @@ use App\Http\Middleware\CheckRole;
 //use App\Http\Requests\EstateRequest;
 use App\Models\Estate;
 use App\Models\User;
+use App\Models\Photo;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Console\MiddlewareMakeCommand;
@@ -109,7 +110,7 @@ public function deletEstate($id)
 public function Addphoto (Request $request,$estate_id)
 {
   $validator = Validator::make($request->all(),[
-    'photo'=>'required',
+    'photo'=>'required|image',
   ]);
   if($validator->fails())
   {
@@ -121,13 +122,13 @@ public function Addphoto (Request $request,$estate_id)
     return $this->senderrors('the estate is not found');
   }
   
-  $photo= Photo::where('estate_id',$estate_id)->get();
+  $photo= $request->photo ;
   $newphoto=time().$photo->getClientOriginalName();
   $photo->move(public_path('upload'),$newphoto);
   $path = "public/upload/$newphoto";
 
   $photo = Photo::create([
-    'photo' => $request->photo,
+    'photo' => $path,
     'estate_id' =>$estate_id,
   ]);
   return $this->sendResponse2($photo,'this is all estate');
