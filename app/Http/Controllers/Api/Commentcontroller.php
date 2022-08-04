@@ -94,7 +94,6 @@ public function view(Request $request,$estate_id)
    }
 
 
-
     public function searchtype(Request $request , $type )
     {
       $Estate =Estate::where('type' ,'like','%'.$type.'%')->first();
