@@ -18,43 +18,44 @@ class Commentcontroller extends BaseController
   public function createcomment(Request $request,$estate_id)
   {
 
-      $validator=Validator::make($request->all(),
-      [
+  $validator=Validator::make($request->all(),
+  [
       'comment'=>'required',
-      ]);
-      if($validator->fails())
-      {
-      return $this->sendError('Please validate error',$validator->errors);
-      }
-      $estate=Estate::where('id',$estate_id)->first();
-
-      if(!$estate)
-      {
-          return $this->senderrors('the estate is not found');
-      }
-
-      $comment=Comment::create([
-      'comment'=>$request->comment,
-      'user_id'=>$request->user()->id,
-      'estate_id'=>$estate_id]);
-
-      return $this->sendResponse2($comment,'comment sccessfully created');
-  }
-
-  public function getcomments(Request $request,$estate_id)
+  ]);
+  if($validator->fails())
   {
-      $estate=Estate::where('id',$estate_id)->first();
+    return $this->sendError('Please validate error',$validator->errors);
+  }
+  $estate=Estate::where('id',$estate_id)->first();
 
-      if(!$estate)
-    {
-      return $this->senderrors('the estate is not found');
-    }
-    $comment= Comment::where('estate_id',$estate_id)->get();
-
-    return $this->sendResponse2($comment,'this is all estate');
+  if(!$estate)
+  {
+    return $this->senderrors('the estate is not found');
   }
 
-  public function view(Request $request,$estate_id)
+  $comment=Comment::create([
+  'comment'=>$request->comment,
+  'user_id'=>$request->user()->id,
+  'estate_id'=>$estate_id
+  ]);
+
+  return $this->sendResponse2($comment,'comment sccessfully created');
+}
+
+public function getcomments(Request $request,$estate_id)
+{
+  $estate=Estate::where('id',$estate_id)->first();
+
+  if(!$estate)
+  {
+    return $this->senderrors('the estate is not found');
+  }
+  $comment= Comment::where('estate_id',$estate_id)->get();
+
+  return $this->sendResponse2($comment,'this is all estate');
+}
+
+public function view(Request $request,$estate_id)
     {
 
       $estate =Estate::find($estate_id);
@@ -108,10 +109,7 @@ class Commentcontroller extends BaseController
       return $this->sendResponse2($Estate1,'successfully');
       }
     }
-
-
-
-    public function searchstate( $state )
+      public function searchstate( $state )
     {
       $Estate =Estate::where('state' ,'like','%'.$state.'%')->first();
       if(!$Estate)

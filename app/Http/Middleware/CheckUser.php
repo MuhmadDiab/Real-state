@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckRole
+class CheckUser
 {
     /**
      * Handle an incoming request.
@@ -15,12 +15,15 @@ class CheckRole
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
-        if ($request->role == 1) {
+    {       
+
+        
+    $userRole = auth()->user()->role;
+
+    if ($userRole === "user") {
             return $next($request);
-        }
+    }
 
-        return response()->json(['msg'=> 'unauthorized']);
-
+    return senderrors("unauthorized");
     }
 }
