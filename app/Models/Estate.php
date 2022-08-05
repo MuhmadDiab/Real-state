@@ -39,10 +39,7 @@ class Estate extends Model
     {
       return $this->hasMany(Comment::class);
     }
-    public function photo()
-    {
-      return $this->hasMany(Photo::class);
-    }
+  
     public function view()
     {
       return $this->hasMany(View::class);

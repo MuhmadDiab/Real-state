@@ -38,8 +38,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     });
 
     Route::group(["middleware" => ["checkManager"]], function(){
-        Route::post("/addphoto/{id}", [EstateController::class, "Addphoto"]);
-        Route::get("/getphoto/{id}", [EstateController::class, "getphoto"]);
+        Route::post("/addphoto", [EstateController::class, "Addphoto"]);
         Route::post("/creatEstate", [EstateController::class, "createEstate"]); 
         Route::post("/updateEstate/{id}", [EstateController::class, "updateEstate"]);
         Route::delete("/deleteEstate/{id}", [EstateController::class, "deletEstate"]);

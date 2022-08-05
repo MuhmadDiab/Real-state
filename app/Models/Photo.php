@@ -8,12 +8,7 @@ use App\Models\Estate;
 class Photo extends Model
 {
     use HasFactory;
-    protected $fillable = ['estate_id', 'photo'];
-    public function estate()
-    {
-      return $this->belongsTo(Estate::class);
-
-    }
+    protected $fillable = [ 'photo'];
     protected $hidden = [
 
         'created_at',

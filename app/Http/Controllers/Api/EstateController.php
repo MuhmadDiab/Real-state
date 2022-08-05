@@ -107,7 +107,7 @@ public function deletEstate($id)
   $estate->delete();
   return $this->sendResponse2($estate , 'the Estate deleted succeflly');
 }
-public function Addphoto (Request $request,$estate_id)
+public function Addphoto (Request $request)
 {
   $validator = Validator::make($request->all(),[
     'photo'=>'required|image',
@@ -116,12 +116,7 @@ public function Addphoto (Request $request,$estate_id)
   {
     return $this->sendError('Please validate error',$validator->errors);
   }
-  $estate= Estate::where('id',$estate_id)->first();
-  if(!$estate)
-  {
-    return $this->senderrors('the estate is not found');
-  }
-  
+
   $photo= $request->photo ;
   $newphoto=time().$photo->getClientOriginalName();
   $photo->move(public_path('upload'),$newphoto);
@@ -129,20 +124,7 @@ public function Addphoto (Request $request,$estate_id)
 
   $photo = Photo::create([
     'photo' => $path,
-    'estate_id' =>$estate_id,
   ]);
-  return $this->sendResponse2($photo,'this is all estate');
-}
-public function getphoto(Request $request,$estate_id)
-{
-  $estate=Estate::where('id',$estate_id)->first();
-
-  if(!$estate)
-  {
-    return $this->senderrors('the estate is not found');
-  }
-  $photo= Photo::where('estate_id',$estate_id)->get();
-
   return $this->sendResponse2($photo,'this is all photo');
 }
 

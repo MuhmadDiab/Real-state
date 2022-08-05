@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->string('photo');
-            $table->unsignedBigInteger('estate_id');
-            $table->foreign('estate_id')->references('id')->on('estates')->onDelete('cascade');
             $table->timestamps();
         });
     }
